@@ -48,13 +48,23 @@ def _print_summary(sim):
     print("body hull contact : %s"
           % ("yes" if any(s["body_contact"] for s in snaps) else "no"))
     warn = {}
+    groups = {"wheel_ground": {}, "chassis_motion": {}}
     for s in snaps:
-        for w in s["warnings"]:
-            warn[w] = warn.get(w, 0) + 1
+        anomalies = s.get("anomalies") or {"wheel_ground": [],
+                                           "chassis_motion": []}
+        for group in ("wheel_ground", "chassis_motion"):
+            for text in anomalies[group]:
+                groups[group][text] = groups[group].get(text, 0) + 1
+                warn[text] = warn.get(text, 0) + 1
     if warn:
         print("contact warnings  :")
-        for k, v in sorted(warn.items()):
-            print("  %-32s %d steps" % (k, v))
+        for group, label in (("wheel_ground", "wheel-ground contact"),
+                             ("chassis_motion", "chassis motion")):
+            if not groups[group]:
+                continue
+            print("  [%s]" % label)
+            for k, v in sorted(groups[group].items()):
+                print("    %-30s %d steps" % (k, v))
 
 
 def _write_csv(sim, path):

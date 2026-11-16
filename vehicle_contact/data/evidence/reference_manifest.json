@@ -1,0 +1,39 @@
+{
+ "equivalence_rule": "refactored engine must reproduce every field of the raw CSV exactly (==), not approximately",
+ "format": "wheel-ground-refactor-reference/1",
+ "scenarios": {
+  "edge": {
+   "columns": 105,
+   "dt": 0.008333333333333333,
+   "raw_csv": "data/evidence/edge_raw.csv",
+   "rows": 2400,
+   "sha256": "d503e86f009f237608034dc0f99e7743a23744361d9e61902af53c0bf645d048",
+   "summary": {
+    "airborne_steps": 0,
+    "body_contact_steps": 0,
+    "max_travel_ratio": 0.9193951136363636,
+    "min_contacts": 2,
+    "partial_steps": 105
+   }
+  },
+  "slope": {
+   "columns": 105,
+   "dt": 0.008333333333333333,
+   "raw_csv": "data/evidence/slope_raw.csv",
+   "rows": 2640,
+   "sha256": "178cc69bc1a3043af7b3ffc6f6a579865718bf02d9a1de46a1426c4ea671de2a",
+   "summary": {
+    "airborne_steps": 0,
+    "body_contact_steps": 0,
+    "max_travel_ratio": 0.7774636227272727,
+    "min_contacts": 4,
+    "partial_steps": 0
+   }
+  }
+ },
+ "source": {
+  "command": "Simulation(name, dt=1/120, query_kind='sphere').run_seconds(DURATIONS[name], PROFILES[name])",
+  "commit": "3b19fe2",
+  "engine": "pre-refactor"
+ }
+}

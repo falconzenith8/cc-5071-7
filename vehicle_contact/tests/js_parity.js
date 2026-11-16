@@ -9,6 +9,7 @@ const path = require('path');
 global.window = global;
 require(path.join(__dirname, '..', 'web', 'js', 'math3d.js'));
 require(path.join(__dirname, '..', 'web', 'js', 'terrain.js'));
+require(path.join(__dirname, '..', 'web', 'js', 'wheel_ground.js'));
 require(path.join(__dirname, '..', 'web', 'js', 'vehicle.js'));
 require(path.join(__dirname, '..', 'web', 'js', 'simulation.js'));
 

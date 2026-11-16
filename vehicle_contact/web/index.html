@@ -77,12 +77,20 @@
     </table>
 
     <h2>接触界面异常提示</h2>
-    <ul id="warnings" class="warnings"><li class="good">no contact anomalies</li></ul>
+    <div class="meta">轮地接触</div>
+    <ul id="anomalies-wheel-ground" class="warnings">
+      <li class="good">no wheel-ground contact anomalies</li>
+    </ul>
+    <div class="meta">车身运动</div>
+    <ul id="anomalies-chassis-motion" class="warnings">
+      <li class="good">no chassis-motion anomalies</li>
+    </ul>
   </aside>
 </main>
 
 <script src="js/math3d.js"></script>
 <script src="js/terrain.js"></script>
+<script src="js/wheel_ground.js"></script>
 <script src="js/vehicle.js"></script>
 <script src="js/simulation.js"></script>
 <script src="js/renderer.js"></script>

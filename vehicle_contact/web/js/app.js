@@ -244,14 +244,12 @@ function render(snap) {
   renderer.drawBox(v.position, v.quat,
     [v.halfLen, v.halfH, v.halfW], target, '#4f86c6');
 
-  // Wheels + suspension struts + contact markers.
+  // Wheels + suspension struts + contact markers.  The wheel centre is the
+  // physical result published by the wheel-ground module; the visible wheel
+  // does not re-run a query or re-derive suspension geometry.
   for (const w of v.wheels) {
     const anchor = v.wheelAnchorWorld(w);
-    const center = w.grounded
-      ? window.M3.add(anchor, window.M3.scale(v.suspensionDir(),
-          w.contactDistance))
-      : window.M3.add(anchor, window.M3.scale(v.suspensionDir(),
-          w.restLength + w.maxTravel));
+    const center = w.center;
     renderer.line(anchor, center, target, '#9fb3c8', 2);
     renderer.drawWheel(center, w.radius, w.steerAngle, w.spinTotal,
                        target, w.grounded);
@@ -303,10 +301,15 @@ function renderDiagnostics(snap) {
     </tr>`).join('');
   $('wheel-rows').innerHTML = rows;
 
-  const warnings = snap.warnings.length
-    ? snap.warnings.map(x => '<li>' + x + '</li>').join('')
-    : '<li class="good">no contact anomalies</li>';
-  $('warnings').innerHTML = warnings;
+  const anomalies = snap.anomalies || {wheel_ground: [], chassis_motion: []};
+  const wg = anomalies.wheel_ground.length
+    ? anomalies.wheel_ground.map(x => '<li>' + x + '</li>').join('')
+    : '<li class="good">no wheel-ground contact anomalies</li>';
+  const cm = anomalies.chassis_motion.length
+    ? anomalies.chassis_motion.map(x => '<li>' + x + '</li>').join('')
+    : '<li class="good">no chassis-motion anomalies</li>';
+  $('anomalies-wheel-ground').innerHTML = wg;
+  $('anomalies-chassis-motion').innerHTML = cm;
 }
 
 function fmtVec(v, d) { return '(' + v.map(x => x.toFixed(d)).join(', ') + ')'; }
